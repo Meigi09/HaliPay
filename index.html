@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HaliPay</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="flex flex-row justify-evenly items-center p-12">
+      <div
+        class="wallet-one p-3 bg-gray-200 rounded-4xl flex flex-row items-center shadow-xl text-white"
+      >
+        <div
+          class="bg-gradient-to-r from-slate-900 to-slate-700 rounded-4xl px-4 flex flex-row items-center w-[350px] h-[250px] backdrop-blur-lg"
+        >
+          <div
+            class="curve bg-gradient-to-r from-slate-500 to-slate-800 border-dashed border-gray-200 border-2 rounded-t-lg rounded-b-3xl w-[320px] h-[190px] backdrop-blur-lg"
+          >
+            <div class="flex flex-col justify-around items-center gap-8 py-3">
+
+              <div class="flex flex-col justify-around items-center gap-8">
+                <h3 class="text-white text-2xl font-semibold">RWF 2000</h3>
+                <div class="flex flex-row justify-around items-center gap-8">
+                  <p class="bg-white/30 backdrop-blur-lg px-3 rounded-full">+1.8%</p>
+                  <p>(+RWF 300) last month</p>
+                </div>
+              </div>
+              <div>
+                <button class="rounded-3xl border border-white/30 bg-transparent backdrop-blur-lg px-8 py-2">Took a Debt</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+       
+        draggable="true"
+        class="money w-[400px] h-[200px] shadow-xl relative"
+      >
+        <div
+          class="desc absolute inset-0 z-10 flex flex-col justify-around gap-6 px-3"
+        >
+          <div class="uppercase text-sm">
+            <p>h7653h364g</p>
+          </div>
+          <div>
+            <h1 class="font-bold text-xl">Money</h1>
+            <!-- <p>Money you have now</p> -->
+          </div>
+        </div>
+
+        <img
+          class="mask-radial-[65%_100%] mask-radial-from-35% mask-radial-at-right size-full"
+          src="https://sevennaturalwonders.org/wp-content/uploads/2024/02/Zhangjiajie-National-Park-landscape.jpg"
+          alt=""
+        />
+        <div
+          class="desc absolute inset-0 z-10 flex flex-col justify-around gap-6 px-3"
+        >
+          <div class="uppercase text-sm">
+            <p>h7653h364g</p>
+          </div>
+          <div>
+            <h1 class="font-bold text-xl">Money</h1>
+            <!-- <p>Money you have now</p> -->
+          </div>
+        </div>
+      </div>
+      
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
