@@ -3,74 +3,172 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>HaliPay</title>
+    <title>HaliPay - Your Financial Situation Manager</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <link rel="stylesheet" href="style.css" />
+   <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <div class="flex flex-row justify-evenly items-center p-12">
-      <div
-        class="wallet-one p-3 bg-gray-200 rounded-4xl flex flex-row items-center shadow-xl text-white"
-      >
-        <div
-          class="bg-gradient-to-r from-slate-900 to-slate-700 rounded-4xl px-4 flex flex-row items-center w-[350px] h-[250px] backdrop-blur-lg"
-        >
-          <div
-            class="curve bg-gradient-to-r from-slate-500 to-slate-800 border-dashed border-gray-200 border-2 rounded-t-lg rounded-b-3xl w-[320px] h-[190px] backdrop-blur-lg"
-          >
-            <div class="flex flex-col justify-around items-center gap-8 py-3">
+    <div class="container">
+      <div class="header">
+        <h1>💰 HaliPay</h1>
+        <p>Step by step to a better financial situation</p>
+      </div>
 
-              <div class="flex flex-col justify-around items-center gap-8">
-                <h3 class="text-white text-2xl font-semibold">RWF 2000</h3>
-                <div class="flex flex-row justify-around items-center gap-8">
-                  <p class="bg-white/30 backdrop-blur-lg px-3 rounded-full">+1.8%</p>
-                  <p>(+RWF 300) last month</p>
+      <div class="wallets-container">
+        <!-- Debt Wallet -->
+        <div class="wallet">
+          <div class="wallet-one">
+            <div class="wallet-inner">
+              <div class="curve">
+                <div class="wallet-content">
+                  <div class="balance-display">
+                    <h3 class="balance-amount" id="debtBalance">RWF 0</h3>
+                    <div class="balance-change">
+                      <span class="badge" id="debtChange">0%</span>
+                      <span id="debtChangeAmount">(RWF 0)</span>
+                    </div>
+                  </div>
+                  <button class="wallet-button" onclick="openAddDebtModal()">+ Add Debt</button>
+                  <div id="debtDropZone" class="drop-zone">Drop money here to pay debt</div>
                 </div>
+                <div class="cards-container" id="debtCards"></div>
               </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main Money Wallet -->
+        <div class="wallet">
+          <div class="money-wallet" draggable="true" id="moneyWallet">
+            <div class="money-desc">
               <div>
-                <button class="rounded-3xl border border-white/30 bg-transparent backdrop-blur-lg px-8 py-2">Took a Debt</button>
+                <p class="money-id">MAIN-WALLET-001</p>
+              </div>
+              <div class="money-title">
+                <h1>Available Money</h1>
+                <p class="money-amount" id="mainBalance">RWF 0</p>
+              </div>
+            </div>
+            <img src="https://sevennaturalwonders.org/wp-content/uploads/2024/02/Zhangjiajie-National-Park-landscape.jpg" alt="Money Background"/>
+          </div>
+          <button class="wallet-button" onclick="openAddMoneyModal()" style="width: 100%; margin-top: 10px;">+ Add Money</button>
+        </div>
+
+        <!-- Savings Wallet -->
+        <div class="wallet">
+          <div class="wallet-one">
+            <div class="wallet-inner">
+              <div class="curve">
+                <div class="wallet-content">
+                  <div class="balance-display">
+                    <h3 class="balance-amount" id="savingsBalance">RWF 0</h3>
+                    <div class="balance-change">
+                      <span class="badge" id="savingsChange">+0%</span>
+                      <span id="savingsChangeAmount">(+RWF 0)</span>
+                    </div>
+                  </div>
+                  <button class="wallet-button" onclick="openAddSavingModal()">+ Add Saving</button>
+                  <div id="savingsDropZone" class="drop-zone">Drop money here to save</div>
+                </div>
+                <div class="cards-container" id="savingsCards"></div>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div
-       
-        draggable="true"
-        class="money w-[400px] h-[200px] shadow-xl relative"
-      >
-        <div
-          class="desc absolute inset-0 z-10 flex flex-col justify-around gap-6 px-3"
-        >
-          <div class="uppercase text-sm">
-            <p>h7653h364g</p>
-          </div>
-          <div>
-            <h1 class="font-bold text-xl">Money</h1>
-            <!-- <p>Money you have now</p> -->
-          </div>
+      <!-- Financial Advice Section -->
+      <div class="advice-section">
+        <div class="advice-header">
+          <span style="font-size: 2rem;">💡</span>
+          <h2>Your Financial Advice</h2>
         </div>
-
-        <img
-          class="mask-radial-[65%_100%] mask-radial-from-35% mask-radial-at-right size-full"
-          src="https://sevennaturalwonders.org/wp-content/uploads/2024/02/Zhangjiajie-National-Park-landscape.jpg"
-          alt=""
-        />
-        <div
-          class="desc absolute inset-0 z-10 flex flex-col justify-around gap-6 px-3"
-        >
-          <div class="uppercase text-sm">
-            <p>h7653h364g</p>
-          </div>
-          <div>
-            <h1 class="font-bold text-xl">Money</h1>
-            <!-- <p>Money you have now</p> -->
-          </div>
-        </div>
+        <div id="adviceContainer"></div>
       </div>
-      
     </div>
+
+    <!-- Add Debt Modal -->
+    <div id="addDebtModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Add New Debt</h2>
+          <button class="close-btn" onclick="closeModal('addDebtModal')">&times;</button>
+        </div>
+        <form onsubmit="addDebt(event)">
+          <div class="form-group">
+            <label>Debt Name</label>
+            <input type="text" id="debtName" placeholder="e.g., MTN MoMo Loan" required />
+          </div>
+          <div class="form-group">
+            <label>Amount (RWF)</label>
+            <input type="number" id="debtAmount" placeholder="10000" required />
+          </div>
+          <div class="form-group">
+            <label>Interest Rate (%)</label>
+            <input type="number" id="debtInterest" placeholder="12" step="0.1" required />
+          </div>
+          <div class="form-group">
+            <label>Due Date</label>
+            <input type="date" id="debtDue" required />
+          </div>
+          <button type="submit" class="submit-btn">Add Debt</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Add Saving Modal -->
+    <div id="addSavingModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Add New Saving Goal</h2>
+          <button class="close-btn" onclick="closeModal('addSavingModal')">&times;</button>
+        </div>
+        <form onsubmit="addSaving(event)">
+          <div class="form-group">
+            <label>Saving Name</label>
+            <input type="text" id="savingName" placeholder="e.g., Emergency Fund" required />
+          </div>
+          <div class="form-group">
+            <label>Current Amount (RWF)</label>
+            <input type="number" id="savingAmount" placeholder="5000" required />
+          </div>
+          <div class="form-group">
+            <label>Goal Amount (RWF)</label>
+            <input type="number" id="savingGoal" placeholder="50000" required />
+          </div>
+          <button type="submit" class="submit-btn">Add Saving</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Add Money Modal -->
+    <div id="addMoneyModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Add Money</h2>
+          <button class="close-btn" onclick="closeModal('addMoneyModal')">&times;</button>
+        </div>
+        <form onsubmit="addMoney(event)">
+          <div class="form-group">
+            <label>Amount (RWF)</label>
+            <input type="number" id="moneyAmount" placeholder="10000" required />
+          </div>
+          <div class="form-group">
+            <label>Source</label>
+            <select id="moneySource" required>
+              <option value="">Select source...</option>
+              <option value="salary">Salary</option>
+              <option value="gift">Gift</option>
+              <option value="business">Business Income</option>
+              <option value="loan">Loan Received</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <button type="submit" class="submit-btn">Add Money</button>
+        </form>
+      </div>
+    </div>
+
     <script src="script.js"></script>
   </body>
 </html>
